@@ -21,7 +21,7 @@ class Derived: public Base{
     int k;
 
     public:
-    Derived(int x): Base(){
+    Derived(int x){
         k=x;
     }
 
