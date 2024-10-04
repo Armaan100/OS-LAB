@@ -47,6 +47,13 @@ int Car::totalCars = 0;
 int main(){
     // vector<Car> car_obj;
     Car *ptr = new Car[3];
+    
+    /*
+    Car* ptr[3];
+    for(int i=0; i<3; i++){
+        ptr[i] = new Car(model, price);
+    }
+    */
 
     string model;
     float price;
@@ -56,6 +63,8 @@ int main(){
         ptr[i] = Car(model, price);
         ptr[i].show();
     }
+
+    Car C2();
 
     delete[] ptr;
 

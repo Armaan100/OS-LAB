@@ -1,0 +1,1 @@
+# When using virtual inheritance, the responsibility of initializing the virtual base class falls on the most derived class (in this case, Person), since inly one copy of the base class is inherited
