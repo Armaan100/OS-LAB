@@ -13,7 +13,12 @@ class Course{
     Course(int courseID, string courseName, int credits){
         this->courseID = courseID;
         this->courseName = courseName;
-        this->credits = credits;
+        if(credits<0){
+            this->credits = 0;
+        }else{
+            this->credits = credits;
+        }
+        totalCourses++;
     }
 
     void displayCourseDetails() {

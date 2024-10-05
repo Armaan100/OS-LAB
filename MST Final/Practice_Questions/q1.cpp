@@ -7,6 +7,8 @@ class Student{
     int roll_num;
     float marks[5];
 
+    friend float calculateTotalMarks(Student);
+    
     public:
     Student(){
         name = "Unknown";
@@ -37,8 +39,6 @@ class Student{
             }
         }
     }
-
-    friend float calculateTotalMarks(Student);
 
     void displayDetails();
 };

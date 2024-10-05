@@ -1,4 +1,5 @@
 #include<iostream>
+#include<algorithm>
 using namespace std;
 
 class Product{
@@ -19,7 +20,7 @@ class Product{
     int getProductId();
 
     //GetProductPrice
-    int getProductPrice(){
+    double getProductPrice(){
         return price;
     }
 };
@@ -45,7 +46,7 @@ class Inventory{
     Inventory(int initialCapacity)
     : capacity(initialCapacity), totalProducts(0){
         //Dynamic allocation of product array
-        products = new Product(capacity);
+        products = new Product[capacity];
     }
 
     //Clean up memory using Destructor
@@ -94,7 +95,13 @@ void Inventory::removeProduct(int productID){
 
 
 Product* findMostExpensiveProduct(const Inventory& inventory){
-    int max_price = inventory.products[0].getProductPrice();
+    if (inventory.totalProducts == 0) {
+        cout << "No products in inventory." << endl;
+        return NULL;  // Return nullptr if inventory is empty
+    }
+
+
+    double max_price = inventory.products[0].getProductPrice();
     for(int i=1; i<inventory.totalProducts; i++){
         max_price = (max_price, inventory.products[i].getProductPrice());
     }
@@ -107,5 +114,31 @@ Product* findMostExpensiveProduct(const Inventory& inventory){
 }
 
 int main(){
+    // Create an inventory with a capacity of 5 products
+    Inventory storeInventory(5);
 
+    // Add some products to the inventory
+    storeInventory.addProduct(Product(101, "Laptop", 10, 999.99));
+    storeInventory.addProduct(Product(102, "Smartphone", 25, 799.99));
+    storeInventory.addProduct(Product(103, "Tablet", 15, 499.99));
+
+    // Display the current inventory
+    cout << "\nCurrent Inventory:\n";
+    storeInventory.displayInventory();
+
+    // Remove a product by ID
+    storeInventory.removeProduct(102);
+
+    // Display inventory after removal
+    cout << "\nAfter removing product 102:\n";
+    storeInventory.displayInventory();
+
+    // Find and display the most expensive product
+    Product* mostExpensive = findMostExpensiveProduct(storeInventory);
+    if (mostExpensive) {
+        cout << "\nThe most expensive product is:\n";
+        mostExpensive->displayProductDetails();
+    }
+
+    return 0;
 }
