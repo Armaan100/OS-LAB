@@ -1,0 +1,17 @@
+# Rules for overloading operators
+- only existing operators can be overloaded. New operators cannot be overloaded
+- The overloaded operator must have atleast one operand that is of user-defined type
+- We cannot change the basic meaning of an operator i.e., we cannot redefine the plus(+) operator to subtract one value from the other
+- Overloaded operators follow the syntax rules of the original opeators. They cannot be overridden.
+- There are some operators which cannot be overloaded/
+    - Class member access operators(., .*)
+    - Scope resolution operator (::)
+    - Size operator(sizeof)
+    - Conditional operator(?:)
+- We cannot use friend functions to overload certain operators. However member functions can be used to overload them
+    - Assignment Operator(=)
+    - Function Call Operator ()
+    - Substring Operator []
+    - Class member access operator (->)
+- When using binary operators overloaded through a member function, the left hand operand must be an object of the relevant class
+- Binary aritmetic operatos such as *, -, / and + must explicitly return a value. They must not attempt to change their own arguments.
