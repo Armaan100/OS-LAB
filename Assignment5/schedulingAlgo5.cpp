@@ -26,6 +26,7 @@ class Process{
     Process(){
         pid = arrivalTime = burstTime = remainingTime = turnAroundTime = waitingTime = completionTime =  0;
     }
+
     Process(int pid, float arrivalTime, float burstTime){
         this->pid = pid;
         this->arrivalTime = arrivalTime;
@@ -83,6 +84,7 @@ class Scheduler{
 
         displayResults(totalWaitingTime, totalTurnAroundTime);
     }
+
 
     void fsfcPremp(){   //Round Robin
         float time = 0;
@@ -161,7 +163,9 @@ class Scheduler{
         float time  = 0;
         
         for(int i=0; i<n; i++){
-            process[i].remainingTime = process[i].burstTime;
+            process[i].
+            
+            remainingTime = process[i].burstTime;
         }
 
         int shortest = 0;  
@@ -290,14 +294,6 @@ class Scheduler{
 
         return total;
     }
-
-
-
-    //priority scheduling (premptive)
-    void prioritySchedulingP(){
-
-    }
-
 
 
     //utility functions

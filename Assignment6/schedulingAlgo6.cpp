@@ -57,48 +57,26 @@ class Scheduler{
 
 
     void roundRobin(){   //Round Robin
-        float time = 0;
-        int tq = 2;
-        sortProcesses();
-
-        // float remainingTime[n];
-
-        //initialize remaining time arr
-        for(int i=0; i<n; i++){
-            process[i].remainingTime = process[i].burstTime;
-        }
-
-        //sets each one's completion time
-        // bool allDone = false;
-
         queue<Process*> readyQueue;
-
-        //initialize the ready queue
-        // Wait for the first process to arrive
+        float time = 0;
         int index = 0;
-        while (index < n && process[index].arrivalTime > time) {
-            time++;
-        }
+        int timeQuantum = 2;
 
-        // Initialize the ready queue with the first process
-        if (index < n) {
+        // Add processes to the ready queue as they arrive
+        while (index < n && process[index].arrivalTime <= time) {
             readyQueue.push(&process[index]);
             index++;
         }
 
-        while(!readyQueue.empty()){
+        while (!readyQueue.empty()) {
             Process* p = readyQueue.front();
             readyQueue.pop();
 
-            if(time<p->arrivalTime){
-                time=p->arrivalTime;
-            }
-
-            if(p->remainingTime>tq){
-                time+=tq;
-                p->remainingTime-=tq;
-            }else{
-                time+=p->remainingTime;
+            if (p->remainingTime > timeQuantum) {
+                time += timeQuantum;
+                p->remainingTime -= timeQuantum;
+            } else {
+                time += p->remainingTime;
                 p->completionTime = time;
                 p->remainingTime = 0;
             }
@@ -109,7 +87,8 @@ class Scheduler{
                 index++;
             }
 
-            if(p->remainingTime != 0){
+            // If the process is not finished, push it back into the queue
+            if (p->remainingTime > 0) {
                 readyQueue.push(p);
             }
         }

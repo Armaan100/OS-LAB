@@ -1,14 +1,5 @@
 #include<iostream>
 using namespace std;
-/*
-Write a program in C/C++/Java to simulate the Banker’s algorithm for 
-deadlock avoidance. Consider at least 3 processes in the system, with 4 
-resource  classes  having  at  least  one  resource  instance  for  each  class. 
-Assume the values for Available, Allocation, MAX, and request from 
-a  particular  process  from  your  side.  Program  must  reflect  two  cases, 
-where a safe sequence exists for one and safe sequence does not exist 
-for another.
-*/
 
 void calculateNeed(int need[3][4], int max[3][4], int allocation [3][4], int n, int r){
     for(int i=0; i<n; i++)
@@ -37,7 +28,8 @@ void bankersAlgo(int need[3][4], int max[3][4], int allocation[3][4], int availa
 
     for(int i=0; i<n; i++){
         canExecute = 1;
-        //execute the incomplete process
+        
+        //check if we can execute the ith incomplete process
         if(finish[i]==0){
             for(int j=0; j<r; j++){
                 if(need[i][j]>available[j]){
@@ -46,7 +38,7 @@ void bankersAlgo(int need[3][4], int max[3][4], int allocation[3][4], int availa
                 }
             }
             
-            //if need is less than available then can execute and will do the following
+            //if need is less than available then can execute and will do the following, i.e., we can execute then...
             if(canExecute){
                 //update the finish status of that process and make insert in the safe swquence
                 finish[i] = 1;
@@ -56,10 +48,10 @@ void bankersAlgo(int need[3][4], int max[3][4], int allocation[3][4], int availa
                 for(int l=0; l<r; l++){
                     available[l]+=allocation[i][l];
                 }
-            }
 
-            //again start cheking from the first process again
-            i=-1;
+                //again start cheking from the first process again if the process executed
+                i=-1;
+            }
         }
     }
 
@@ -88,20 +80,21 @@ int main(){
     int r=4;
 
     int allocation[3][4] = {
-        {0, 0, 1, 2}, //P0
-        {2, 0, 0, 0}, //P1
-        {1, 0, 1, 1}  //P2
+        {1, 1, 1, 0}, //P0
+        {2, 3, 2, 5}, //P1
+        {1, 1, 1, 1}  //P2 - Holding
     };
 
     int max[3][4] = {
-        {3, 2, 2, 4},  //P0
-        {4, 0, 2, 0},  //P1
+        {7, 2, 3, 4},  //P0
+        {4, 3, 3, 6},  //P1
         {5, 2, 3, 3}   //P2
     };
 
     int total[4] = {8, 7, 6, 9};  //R0, R1, R2, R3
 
     int available[4];
+
 
     for(int i=0; i<r; i++){
         int total_allocated = 0;
@@ -112,11 +105,22 @@ int main(){
         available[i] = total[i] - total_allocated;
     }
 
+    for(int i=0; i<r; i++){
+        cout<<available[i]<<" ";
+    }
+    cout<<endl;
+
     int need[3][4];
 
     //calculate need
     calculateNeed(need, max, allocation, n, r);
+    for(int i=0; i<n; i++){
+        for(int j=0; j<r; j++){
+            cout<<need[i][j]<<" ";
+        }
+    }
 
+    cout<<endl;
     bankersAlgo(need, max, allocation, available, n, r);
 }
 
